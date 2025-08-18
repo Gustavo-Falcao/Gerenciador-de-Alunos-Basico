@@ -1,0 +1,5 @@
+#Pastas e Arquivos que não devem ser rastreados.
+[Bb]in/
+[Oo]bj/
+*.csproj
+*.sln
