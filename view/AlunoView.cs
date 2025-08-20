@@ -1,87 +1,104 @@
-class AlunoView
+using Gerenc_Alunos.controller;
+using Gerenc_Alunos.model;
+namespace Gerenc_Alunos.view
 {
-    private AlunoController alunoController;
-
-    public AlunoView(AlunoController alunoController)
+    class AlunoView
     {
-        this.alunoController = alunoController;
-    }
+        private AlunoController alunoController;
 
-    public void CadastrarAlunoComNotas()
-    {
-        Console.Write("Digite o nome do aluno: ");
-        string nome = Console.ReadLine();
-
-        Console.Write("Digite a matricula do aluno: ");
-        string matricula = Console.ReadLine();
-
-        Console.Write("Digite a primeira nota: ");
-        float nota1 = float.Parse(Console.ReadLine());
-
-        Console.Write("Digite a segunda nota: ");
-        float nota2 = float.Parse(Console.ReadLine());
-
-        CriarAlunoEadicionarComNotas(nome, matricula, nota1, nota2);
-    }
-
-    private void CriarAlunoEadicionarComNotas(string nome, string matricula, float nota1, float nota2)
-    {
-        alunoController.AdicionarAluno(new Aluno(nome, matricula, nota1, nota2));
-    }
-
-    public void CadastrarAlunoSemNotas()
-    {
-        Console.Write("Digite o nome do aluno: ");
-        string nome = Console.ReadLine();
-
-        Console.Write("Digite a matricula do aluno: ");
-        string matricula = Console.ReadLine();
-
-        CriarAlunoEadicionarSemNotas(nome, matricula);
-    }
-
-    private void CriarAlunoEadicionarSemNotas(string nome, string matricula)
-    {
-        alunoController.AdicionarAluno(new Aluno(nome, matricula));
-    }
-
-    public void MostrarAlunos()
-    {
-        List<Aluno> alunos = alunoController.ListarAlunos();
-
-        Console.WriteLine("\n\n<< -- Alunos cadastrados -- >>");
-
-        foreach (Aluno aluno in alunos)
+        public AlunoView(AlunoController alunoController)
         {
-            aluno.MostrarInfo();
-            if (aluno.CalcularMedia() != null)
+            this.alunoController = alunoController;
+        }
+
+        public void CadastrarAlunoComNotas()
+        {
+            Console.Write("Digite o nome do aluno: ");
+            string nome = Console.ReadLine();
+
+            Console.Write("Digite a matricula do aluno: ");
+            string matricula = Console.ReadLine();
+
+            Console.Write("Digite a primeira nota: ");
+            float nota1 = float.Parse(Console.ReadLine());
+
+            Console.Write("Digite a segunda nota: ");
+            float nota2 = float.Parse(Console.ReadLine());
+
+            CriarAlunoEadicionarComNotas(nome, matricula, nota1, nota2);
+        }
+
+        private void CriarAlunoEadicionarComNotas(string nome, string matricula, float nota1, float nota2)
+        {
+            alunoController.AdicionarAluno(new Aluno(nome, matricula, nota1, nota2));
+        }
+
+        public void CadastrarAlunoSemNotas()
+        {
+            Console.Write("Digite o nome do aluno: ");
+            string nome = Console.ReadLine();
+
+            Console.Write("Digite a matricula do aluno: ");
+            string matricula = Console.ReadLine();
+
+            CriarAlunoEadicionarSemNotas(nome, matricula);
+        }
+
+        private void CriarAlunoEadicionarSemNotas(string nome, string matricula)
+        {
+            alunoController.AdicionarAluno(new Aluno(nome, matricula));
+        }
+
+        public void MostrarAlunos()
+        {
+            List<Aluno> alunos = alunoController.ListarAlunos();
+
+            Console.WriteLine("\n\n<< -- Alunos cadastrados -- >>");
+            if (alunos.Count == 0)
             {
-                float media = aluno.CalcularMedia().Value;
-                Console.WriteLine($"Media: {media:F2}");
-                Console.WriteLine($"Situação: {GerarSituacaoAluno(media)}");
+                Console.WriteLine(">> Nenhum aluno cadastrado ainda...");
             }
             else
             {
-                Console.WriteLine($"Media: Em espera");
-                Console.WriteLine($"Situação: Em observação");
+                foreach (Aluno aluno in alunos)
+                {
+                    aluno.MostrarInfo();
+                    Console.WriteLine("-------------------------------------");
+                }
             }
-            Console.WriteLine("-------------------------------------");
         }
-    }
 
-    private string GerarSituacaoAluno(float media)
-    {
-        if (media < 4)
+        public void AcessarAluno(string matricula)
         {
-            return "Reprovado";
+            Aluno aluno = alunoController.BuscarAlunoOrNull(matricula);
+            if (aluno is null)
+            {
+                Console.WriteLine($"\n>> O aluno com a matricula {matricula} não foi encontrado!!");
+            }
+            else
+            {
+                int opcaoAtualizarAluno;
+                do
+                {
+                    Console.WriteLine("\n\n-----------------------------------------------");
+                    Console.WriteLine($"<<-- Informações do aluno {aluno.Nome} -->>");
+                    aluno.MostrarInfo();
+                    Console.WriteLine("-------------------------------------");
+                    Console.WriteLine(">> Opções");
+                    Console.WriteLine("   [1]- Atualizar nota 1");
+                    Console.WriteLine("   [2]- Atualizar nota 2");
+                    Console.WriteLine("   [0]- Voltar");
+                    Console.WriteLine("-------------------------------------");
+                    Console.WriteLine("#>> Escolha uma opcao: ");
+                    opcaoAtualizarAluno = int.Parse(Console.ReadLine());
+
+                    
+                } while (opcaoAtualizarAluno != 0);
+
+                
+
+            }
         }
-        else if (media <= 6.9)
-        {
-            return "Exame";
-        }
-        else
-        {
-            return "Aprovado";
-        }
+
     }
 }

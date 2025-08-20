@@ -1,19 +1,35 @@
-class AlunoController
+using Gerenc_Alunos.model;
+namespace Gerenc_Alunos.controller
 {
-    private List<Aluno> alunos;
-
-    public AlunoController()
+    class AlunoController
     {
-        alunos = new List<Aluno>();
-    }
+        private List<Aluno> alunos;
 
-    public List<Aluno> ListarAlunos()
-    {
-        return alunos;
-    }
+        public AlunoController()
+        {
+            alunos = new List<Aluno>();
+        }
 
-    public void AdicionarAluno(Aluno aluno)
-    {
-        alunos.Add(aluno);
+        public List<Aluno> ListarAlunos()
+        {
+            return alunos;
+        }
+
+        public void AdicionarAluno(Aluno aluno)
+        {
+            alunos.Add(aluno);
+        }
+
+        public Aluno? BuscarAlunoOrNull(string matricula)
+        {
+            foreach (Aluno aluno in alunos)
+            {
+                if (aluno.Matricula == matricula)
+                {
+                    return aluno;
+                }
+            }
+            return null;
+        }
     }
 }

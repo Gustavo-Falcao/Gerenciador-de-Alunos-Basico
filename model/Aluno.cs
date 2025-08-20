@@ -1,79 +1,103 @@
-class Aluno
+namespace Gerenc_Alunos.model
 {
-    private string nome;
-    private string matricula;
-    private float? nota1;
-    private float? nota2;
-
-    public Aluno(string nome, string matricula, float nota1, float nota2)
+    class Aluno
     {
-        this.nome = nome;
-        this.matricula = matricula;
-        this.nota1 = nota1;
-        this.nota2 = nota2;
-    }
+        private string nome;
+        private string matricula;
+        private float? nota1;
+        private float? nota2;
 
-    public Aluno(string nome, string matricula)
-    {
-        this.nome = nome;
-        this.matricula = matricula;
-    }
-
-    public string Nome
-    {
-        get { return nome; }
-        set { nome = value; }
-    }
-
-    public string Matricula
-    {
-        get { return matricula; }
-        set { matricula = value; }
-    }
-
-    public float? Nota1
-    {
-        get { return nota1; }
-        set { nota1 = value; }
-    }
-
-    public float? Nota2
-    {
-        get { return nota2; }
-        set { nota2 = value; }
-    }
-
-    public float? CalcularMedia()
-    {
-        if (nota1 != null && nota2 != null)
+        public Aluno(string nome, string matricula, float nota1, float nota2)
         {
-            return (nota1.Value + nota2.Value) / 2;
+            this.nome = nome;
+            this.matricula = matricula;
+            this.nota1 = nota1;
+            this.nota2 = nota2;
         }
-        else
-        {
-            return null;
-        }
-    }
 
-    public void MostrarInfo()
-    {
-        Console.WriteLine($"\nNome: {nome}");
-        Console.WriteLine($"Matrícula: {matricula}");
-        if (nota1 == null) {
-            Console.WriteLine("Nota 1: Não informado");
-        }
-        else
+        public Aluno(string nome, string matricula)
         {
-            Console.WriteLine($"Nota 1: {nota1}");
+            this.nome = nome;
+            this.matricula = matricula;
         }
-        if (nota2 == null)
-        {
-            Console.WriteLine("Nota 2: Não informado");
-        }
-        else
-        {
-            Console.WriteLine($"Nota 2: {nota2}");   
-        }
-    }
 
+        public string Nome
+        {
+            get { return nome; }
+            set { nome = value; }
+        }
+
+        public string Matricula
+        {
+            get { return matricula; }
+            set { matricula = value; }
+        }
+
+        public float? Nota1
+        {
+            get { return nota1; }
+            set { nota1 = value; }
+        }
+
+        public float? Nota2
+        {
+            get { return nota2; }
+            set { nota2 = value; }
+        }
+
+        public float? CalcularMedia()
+        {
+            if (nota1 != null && nota2 != null)
+            {
+                return (nota1.Value + nota2.Value) / 2;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private bool IsNotaNull(float? nota)
+        {
+            return nota is null;
+        }
+
+        private string GerarSituacao(float media)
+        {
+            if (media < 4)
+            {
+                return "Reprovado";
+            }
+            else if (media <= 6.9)
+            {
+                return "Exame";
+            }
+            else
+            {
+                return "Aprovado";
+            }
+        }
+
+        public void MostrarInfo()
+        {
+            Console.WriteLine($"\nNome: {nome}");
+            Console.WriteLine($"Matrícula: {matricula}");
+            string msgOuNota;
+            msgOuNota = IsNotaNull(nota1) ? "Não informado" : nota1.Value.ToString();
+            Console.WriteLine($"Nota 1: {msgOuNota}");
+            msgOuNota = IsNotaNull(nota2) ? "Não informado" : nota2.Value.ToString();
+            Console.WriteLine($"Nota 2: {msgOuNota}");
+            if (CalcularMedia() is not null)
+            {
+                float media = CalcularMedia().Value;
+                Console.WriteLine($"Media: {media:F2}");
+                Console.WriteLine($"Situação: {GerarSituacao(media)}");
+            }
+            else
+            {
+                Console.WriteLine($"Media: Em espera");
+                Console.WriteLine($"Situação: Em observação");
+            }
+        } //Linha 85
+    }
 }
