@@ -48,9 +48,9 @@ namespace Gerenc_Alunos
                         }
                         break;
                     case 2:
-                        Console.WriteLine("\n\nDigite a matricula do aluno desejado: ");
+                        Console.Write("\n\nDigite a matricula do aluno desejado: ");
                         string matriculaBusca = Console.ReadLine();
-                        
+                        alunoView.AcessarAluno(matriculaBusca);
                         break;
                     case 3:
                         alunoView.MostrarAlunos();

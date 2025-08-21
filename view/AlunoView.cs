@@ -85,18 +85,41 @@ namespace Gerenc_Alunos.view
                     aluno.MostrarInfo();
                     Console.WriteLine("-------------------------------------");
                     Console.WriteLine(">> Opções");
-                    Console.WriteLine("   [1]- Atualizar nota 1");
-                    Console.WriteLine("   [2]- Atualizar nota 2");
-                    Console.WriteLine("   [0]- Voltar");
+                    Console.WriteLine("  [1]- Atualizar nota 1");
+                    Console.WriteLine("  [2]- Atualizar nota 2");
+                    Console.WriteLine("  [0]- Voltar");
                     Console.WriteLine("-------------------------------------");
-                    Console.WriteLine("#>> Escolha uma opcao: ");
+                    Console.Write("#>> Escolha uma opcao: ");
                     opcaoAtualizarAluno = int.Parse(Console.ReadLine());
-
-                    
+                    TratarOpAtualizarAluno(opcaoAtualizarAluno, aluno);
                 } while (opcaoAtualizarAluno != 0);
+            }
+        }
 
-                
-
+        private void TratarOpAtualizarAluno(int opcao, Aluno aluno)
+        {
+            switch (opcao)
+            {
+                case 1:
+                    Console.WriteLine("\n\n----------------------------");
+                    Console.WriteLine("<<-- Atualizar nota 1 -->>");
+                    Console.Write(">> Digite a nova nota: ");
+                    float nota1 = float.Parse(Console.ReadLine());
+                    aluno.Nota1 = nota1;
+                    break;
+                case 2:
+                    Console.WriteLine("\n\n----------------------------");
+                    Console.WriteLine("<<-- Atualizar nota 2 -->>");
+                    Console.Write(">> Digite a nova nota: ");
+                    float nota2 = float.Parse(Console.ReadLine());
+                    aluno.Nota2 = nota2;
+                    break;
+                case 0:
+                    Console.WriteLine("Voltando...");
+                    break;
+                default:
+                    Console.WriteLine("Digite um opção válida!!!");
+                    break;
             }
         }
 
