@@ -1,5 +1,6 @@
 using Gerenc_Alunos.controller;
 using Gerenc_Alunos.model;
+using System.Globalization;
 namespace Gerenc_Alunos.view
 {
     class AlunoView
@@ -20,10 +21,11 @@ namespace Gerenc_Alunos.view
             string matricula = Console.ReadLine();
 
             Console.Write("Digite a primeira nota: ");
-            float nota1 = float.Parse(Console.ReadLine());
+            //float nota1 = float.Parse(Console.ReadLine());
+            float nota1 = float.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
 
             Console.Write("Digite a segunda nota: ");
-            float nota2 = float.Parse(Console.ReadLine());
+            float nota2 = float.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
 
             CriarAlunoEadicionarComNotas(nome, matricula, nota1, nota2);
         }
@@ -123,5 +125,20 @@ namespace Gerenc_Alunos.view
             }
         }
 
+
+        public void DeletarAluno() 
+        {
+            Console.WriteLine("\n\n-------------------------------");
+            Console.WriteLine("  << Deletar Aluno >>");
+            Console.Write("##-> Informe a matricula: ");
+            string matriculaDelete = Console.ReadLine();
+            if(alunoController.RemoverAluno(matriculaDelete))
+            {
+                Console.WriteLine("Aluno removido com sucesso ...");
+            } else 
+            {
+                Console.WriteLine("Aluno não encontrado!!");
+            }
+        }
     }
 }

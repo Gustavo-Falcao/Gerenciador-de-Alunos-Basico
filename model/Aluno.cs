@@ -2,26 +2,33 @@ namespace Gerenc_Alunos.model
 {
     class Aluno
     {
+        /*
         private string nome;
         private string matricula;
         private float? nota1;
         private float? nota2;
+        */
+
+        public string Nome {get; set;}
+        public string Matricula {get; set;}
+        public float? Nota1 {get; set;}
+        public float? Nota2 {get; set;}
 
         public Aluno(string nome, string matricula, float nota1, float nota2)
         {
-            this.nome = nome;
-            this.matricula = matricula;
-            this.nota1 = nota1;
-            this.nota2 = nota2;
+            Nome = nome;
+            Matricula = matricula;
+            Nota1 = nota1;
+            Nota2 = nota2;
         }
 
         public Aluno(string nome, string matricula)
         {
-            this.nome = nome;
-            this.matricula = matricula;
+            Nome = nome;
+            Matricula = matricula;
         }
 
-        public string Nome
+    /*    public string Nome
         {
             get { return nome; }
             set { nome = value; }
@@ -44,12 +51,12 @@ namespace Gerenc_Alunos.model
             get { return nota2; }
             set { nota2 = value; }
         }
-
+*/
         public float? CalcularMedia()
         {
-            if (nota1 != null && nota2 != null)
+            if (Nota1 != null && Nota2 != null)
             {
-                return (nota1.Value + nota2.Value) / 2;
+                return (Nota1.Value + Nota2.Value) / 2;
             }
             else
             {
@@ -80,12 +87,12 @@ namespace Gerenc_Alunos.model
 
         public void MostrarInfo()
         {
-            Console.WriteLine($"\nNome: {nome}");
-            Console.WriteLine($"Matrícula: {matricula}");
+            Console.WriteLine($"\nNome: {Nome}");
+            Console.WriteLine($"Matrícula: {Matricula}");
             string msgOuNota;
-            msgOuNota = IsNotaNull(nota1) ? "Não informado" : nota1.Value.ToString();
+            msgOuNota = IsNotaNull(Nota1) ? "Não informado" : Nota1.Value.ToString();
             Console.WriteLine($"Nota 1: {msgOuNota}");
-            msgOuNota = IsNotaNull(nota2) ? "Não informado" : nota2.Value.ToString();
+            msgOuNota = IsNotaNull(Nota2) ? "Não informado" : Nota2.Value.ToString();
             Console.WriteLine($"Nota 2: {msgOuNota}");
             if (CalcularMedia() is not null)
             {

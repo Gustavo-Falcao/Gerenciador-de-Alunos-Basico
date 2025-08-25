@@ -18,7 +18,8 @@ namespace Gerenc_Alunos
                 Console.WriteLine("|                                       |");
                 Console.WriteLine("|          [1]- Cadastrar Aluno         |");
                 Console.WriteLine("|          [2]- Consultar Aluno         |");
-                Console.WriteLine("|          [3]- Listar Alunos           |");
+                Console.WriteLine("|          [3]- Deletar Aluno           |");
+                Console.WriteLine("|          [4]- Listar Alunos           |");
                 Console.WriteLine("|          [0]- Sair                    |");
                 Console.WriteLine("|                                       |");
                 Console.WriteLine("+ ------------------------------------- +");
@@ -53,6 +54,9 @@ namespace Gerenc_Alunos
                         alunoView.AcessarAluno(matriculaBusca);
                         break;
                     case 3:
+                        alunoView.DeletarAluno();
+                        break;
+                    case 4:
                         alunoView.MostrarAlunos();
                         break;
                     case 0:

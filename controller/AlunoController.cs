@@ -31,5 +31,18 @@ namespace Gerenc_Alunos.controller
             }
             return null;
         }
+
+        public bool RemoverAluno(string matricula)
+        {
+            Aluno aluno = BuscarAlunoOrNull(matricula);
+            if(aluno is not null)
+            {
+                alunos.Remove(aluno);
+                return true;
+            } else 
+            {
+                return false;
+            }
+        }
     }
 }
