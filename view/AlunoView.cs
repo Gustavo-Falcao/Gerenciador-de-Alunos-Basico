@@ -1,6 +1,7 @@
 using Gerenc_Alunos.controller;
 using Gerenc_Alunos.model;
 using System.Globalization;
+using Gerenc_Alunos.helpers;
 namespace Gerenc_Alunos.view
 {
     class AlunoView
@@ -14,18 +15,13 @@ namespace Gerenc_Alunos.view
 
         public void CadastrarAlunoComNotas()
         {
-            Console.Write("Digite o nome do aluno: ");
-            string nome = Console.ReadLine();
+            string nome = InputHelper.LerString("Digite o nome do aluno: ");
 
-            Console.Write("Digite a matricula do aluno: ");
-            string matricula = Console.ReadLine();
+            string matricula = InputHelper.LerString("Digite a matricula do aluno: ");
 
-            Console.Write("Digite a primeira nota: ");
-            //float nota1 = float.Parse(Console.ReadLine());
-            float nota1 = float.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            float nota1 = InputHelper.LerFloat("Digite a primeira nota: ");
 
-            Console.Write("Digite a segunda nota: ");
-            float nota2 = float.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
+            float nota2 = InputHelper.LerFloat("Digite a segunda nota: ");
 
             CriarAlunoEadicionarComNotas(nome, matricula, nota1, nota2);
         }
@@ -37,11 +33,9 @@ namespace Gerenc_Alunos.view
 
         public void CadastrarAlunoSemNotas()
         {
-            Console.Write("Digite o nome do aluno: ");
-            string nome = Console.ReadLine();
+            string nome = InputHelper.LerString("Digite o nome do aluno: ");
 
-            Console.Write("Digite a matricula do aluno: ");
-            string matricula = Console.ReadLine();
+            string matricula = InputHelper.LerString("Digite a matricula do aluno: ");
 
             CriarAlunoEadicionarSemNotas(nome, matricula);
         }
@@ -64,15 +58,39 @@ namespace Gerenc_Alunos.view
             {
                 foreach (Aluno aluno in alunos)
                 {
-                    aluno.MostrarInfo();
+                    MostrarInfoAluno(aluno);
                     Console.WriteLine("-------------------------------------");
                 }
             }
         }
 
+        private bool IsNotaNull(float? nota)
+        {
+            return nota is null;
+        }
+
+        public void MostrarInfoAluno(Aluno aluno)
+        {
+            Console.WriteLine($"\nNome: {aluno.Nome}");
+            Console.WriteLine($"Matrícula: {aluno.Matricula}");
+            Console.WriteLine($"Nota1: {(IsNotaNull(aluno.Nota1) ? "Não informado" : $"{aluno.Nota1}")}");
+            Console.WriteLine($"Nota2: {(IsNotaNull(aluno.Nota2) ? "Não informado" : $"{aluno.Nota2}")}");
+            float? media = Media.GerarMedia(aluno.Nota1, aluno.Nota2);
+            if (media is not null)
+            {
+                Console.WriteLine($"Media: {media:F2}");
+                Console.WriteLine($"Situação: {Media.GerarSituacao(media.Value)}");
+            }
+            else
+            {
+                Console.WriteLine("Media: esperando notas...");
+                Console.WriteLine("Situação: Em observação");
+            }
+        }
+
         public void AcessarAluno(string matricula)
         {
-            Aluno aluno = alunoController.BuscarAlunoOrNull(matricula);
+            Aluno? aluno = alunoController.BuscarAlunoOrNull(matricula);
             if (aluno is null)
             {
                 Console.WriteLine($"\n>> O aluno com a matricula {matricula} não foi encontrado!!");
@@ -84,15 +102,14 @@ namespace Gerenc_Alunos.view
                 {
                     Console.WriteLine("\n\n-----------------------------------------------");
                     Console.WriteLine($"<<-- Informações do aluno {aluno.Nome} -->>");
-                    aluno.MostrarInfo();
+                    MostrarInfoAluno(aluno);
                     Console.WriteLine("-------------------------------------");
                     Console.WriteLine(">> Opções");
                     Console.WriteLine("  [1]- Atualizar nota 1");
                     Console.WriteLine("  [2]- Atualizar nota 2");
                     Console.WriteLine("  [0]- Voltar");
                     Console.WriteLine("-------------------------------------");
-                    Console.Write("#>> Escolha uma opcao: ");
-                    opcaoAtualizarAluno = int.Parse(Console.ReadLine());
+                    opcaoAtualizarAluno = InputHelper.LerInt("#>> Escolha uma opcao: ");
                     TratarOpAtualizarAluno(opcaoAtualizarAluno, aluno);
                 } while (opcaoAtualizarAluno != 0);
             }
@@ -105,15 +122,13 @@ namespace Gerenc_Alunos.view
                 case 1:
                     Console.WriteLine("\n\n----------------------------");
                     Console.WriteLine("<<-- Atualizar nota 1 -->>");
-                    Console.Write(">> Digite a nova nota: ");
-                    float nota1 = float.Parse(Console.ReadLine());
+                    float nota1 = InputHelper.LerFloat(">> Digite a nova nota: ");
                     aluno.Nota1 = nota1;
                     break;
                 case 2:
                     Console.WriteLine("\n\n----------------------------");
                     Console.WriteLine("<<-- Atualizar nota 2 -->>");
-                    Console.Write(">> Digite a nova nota: ");
-                    float nota2 = float.Parse(Console.ReadLine());
+                    float nota2 = InputHelper.LerFloat(">> Digite a nova nota: ");
                     aluno.Nota2 = nota2;
                     break;
                 case 0:
@@ -125,13 +140,11 @@ namespace Gerenc_Alunos.view
             }
         }
 
-
         public void DeletarAluno() 
         {
             Console.WriteLine("\n\n-------------------------------");
-            Console.WriteLine("  << Deletar Aluno >>");
-            Console.Write("##-> Informe a matricula: ");
-            string matriculaDelete = Console.ReadLine();
+            Console.WriteLine("  << Deletar Aluno >>");    
+            string matriculaDelete = InputHelper.LerString("##-> Informe a matricula: ");
             if(alunoController.RemoverAluno(matriculaDelete))
             {
                 Console.WriteLine("Aluno removido com sucesso ...");

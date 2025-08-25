@@ -34,7 +34,7 @@ namespace Gerenc_Alunos.controller
 
         public bool RemoverAluno(string matricula)
         {
-            Aluno aluno = BuscarAlunoOrNull(matricula);
+            Aluno? aluno = BuscarAlunoOrNull(matricula);
             if(aluno is not null)
             {
                 alunos.Remove(aluno);

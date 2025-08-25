@@ -1,5 +1,6 @@
 ﻿using Gerenc_Alunos.controller;
 using Gerenc_Alunos.view;
+using Gerenc_Alunos.helpers;
 namespace Gerenc_Alunos
 {
     class Program
@@ -23,8 +24,7 @@ namespace Gerenc_Alunos
                 Console.WriteLine("|          [0]- Sair                    |");
                 Console.WriteLine("|                                       |");
                 Console.WriteLine("+ ------------------------------------- +");
-                Console.Write("==>> Escolha uma opção: ");
-                opcao = int.Parse(Console.ReadLine());
+                opcao = InputHelper.LerInt("==>> Escolha uma opção: ");
 
                 switch (opcao)
                 {
@@ -33,8 +33,7 @@ namespace Gerenc_Alunos
                         Console.WriteLine(" [1]- Cadastrar o aluno informando as notas");
                         Console.WriteLine(" [2]- Cadastrar o aluno e informar as notas depois");
                         Console.WriteLine("-----------------------------------------------");
-                        Console.Write("==>> Escolha uma opção: ");
-                        int opcaoCadastro = int.Parse(Console.ReadLine());
+                        int opcaoCadastro = InputHelper.LerInt("==>> Escolha uma opção: ");
                         if (opcaoCadastro == 1)
                         {
                             alunoView.CadastrarAlunoComNotas();
@@ -49,8 +48,7 @@ namespace Gerenc_Alunos
                         }
                         break;
                     case 2:
-                        Console.Write("\n\nDigite a matricula do aluno desejado: ");
-                        string matriculaBusca = Console.ReadLine();
+                        string matriculaBusca = InputHelper.LerString("\n\nDigite a matricula do aluno desejado: ");
                         alunoView.AcessarAluno(matriculaBusca);
                         break;
                     case 3:
